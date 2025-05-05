@@ -431,7 +431,7 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
         if (!widget.disableLengthCheck) {
           // Special case for Kenya - accept either 9 or 10 digits
           if (_selectedCountry.code == 'KE') {
-            return (value.length == 9 || value.length == 10)
+            return (value.length >= 9 && value.length <= 10)
                 ? null
                 : widget.invalidNumberMessage;
           }
