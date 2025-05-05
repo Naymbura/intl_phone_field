@@ -429,11 +429,17 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
       validator: (value) {
         if (value == null || !isNumeric(value)) return validatorMessage;
         if (!widget.disableLengthCheck) {
+          // Special case for Kenya - accept either 9 or 10 digits
+          if (_selectedCountry.code == 'KE') {
+            return (value.length == 9 || value.length == 10)
+                ? null
+                : widget.invalidNumberMessage;
+          }
+          // Default behavior for other countries
           return value.length == _selectedCountry.minLength || value.length == _selectedCountry.maxLength
               ? null
               : widget.invalidNumberMessage;
         }
-
         return validatorMessage;
       },
       maxLength: widget.disableLengthCheck ? null : _selectedCountry.maxLength,
